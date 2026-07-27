@@ -45,3 +45,31 @@ async function register(req, res) {
         });
     }
 }
+
+async function login(req, res) {
+    try {
+        const { email, password } = req.body;
+
+        if (!email || !password) {
+            return res.status(400).json({
+                message: 'Email dan password wajib di isi'
+            });
+        }
+
+        const user = await db.User.findOne({
+            where: { email }
+        });
+
+        if (!user) {
+            return res.status(404).json({
+                message:'email atau password salah'
+            });
+        }
+
+        const ismatch = await bcrypt.compare(password, user.password);
+
+        if (!ismatch) {
+            return res.status(404).json({
+                message:'email atau password salah'
+            });
+        }
