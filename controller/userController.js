@@ -29,3 +29,19 @@ async function register(req, res) {
             email,
             password: hashedPassword
         });
+
+        return res.status(201).json({
+            message: 'registrasi berhasil',
+            data: {
+                id: user.id,
+                email: user.email
+            }
+        });
+    }
+    catch (error) {
+        return res.status(500).json({
+            message: 'terjadi kesalahan pada server',
+            error: error.message
+        });
+    }
+}
