@@ -73,3 +73,32 @@ async function login(req, res) {
                 message:'email atau password salah'
             });
         }
+
+        const token = jwt.sign(
+            {
+                id : user.id,
+                email : user.email
+            },
+            process.env.JWT_SECRET,
+            {
+                expiresIn: process.env.JWT_EXPIRES
+            }
+        );
+        
+        return res.status(200).json({
+            message: 'login berhasil',
+            token
+        });
+    }
+    catch (error) {
+        return res.status(500).json({
+            message: 'terjadi kesalahan pada server',
+            error: error.message
+        });
+    }
+}
+
+module.exports = {
+    register,
+    login
+};
