@@ -14,6 +14,6 @@ module.exports = (sequelize, dataTypes) => {
             type: dataTypes.STRING,
             allowNull: false
         },
-});
-return User;
+    });
+    return User;
 };
